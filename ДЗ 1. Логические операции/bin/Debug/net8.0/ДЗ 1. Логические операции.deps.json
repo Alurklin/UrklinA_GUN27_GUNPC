@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "ДЗ 1. Логические операции/1.0.0": {
+        "runtime": {
+          "ДЗ 1. Логические операции.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ДЗ 1. Логические операции/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
