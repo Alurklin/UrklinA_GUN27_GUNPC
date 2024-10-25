@@ -9,7 +9,7 @@ namespace Classes
     public class Helm
     {
         public string Name { get; }
-        public float Armor { get; set; }
+        public float Armor { get; private set; }
 
         public Helm(string name = "Helm")
         {
@@ -25,7 +25,7 @@ namespace Classes
     public class Shell
     {
         public string Name { get; }
-        public float Armor { get; set; }
+        public float Armor { get; private set; }
 
         public Shell(string name = "Shell")
         {
@@ -41,7 +41,7 @@ namespace Classes
     public class Boots
     {
         public string Name { get; }
-        public float Armor { get; set; }
+        public float Armor { get; private set; }
 
         public Boots(string name = "Boots")
         {

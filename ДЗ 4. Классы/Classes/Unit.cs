@@ -54,11 +54,23 @@ namespace Classes
             return _health <= 0f;
         }
 
-        public void EquipHelm(Helm helm) { _helm = helm; }
-        public void EquipShell(Shell shell) { _shell = shell; }
-        public void EquipBoots(Boots boots) { _boots = boots; }
+        public void EquipHelm(Helm helm)
+        {
+            _helm = helm;
+        }
+        public void EquipShell(Shell shell)
+        {
+            _shell = shell;
+        }
+        public void EquipBoots(Boots boots)
+        {
+            _boots = boots;
+        }
 
-        public void EquipWeapon(Weapon weapon) { _weapon = weapon; }
+        public void EquipWeapon(Weapon weapon)
+        {
+            _weapon = weapon;
+        }
 
     }
 }
