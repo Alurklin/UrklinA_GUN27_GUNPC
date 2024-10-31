@@ -1,0 +1,15 @@
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\net8.0\Casino.exe
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\net8.0\Casino.deps.json
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\net8.0\Casino.runtimeconfig.json
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\net8.0\Casino.dll
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\net8.0\Casino.pdb
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.GeneratedMSBuildEditorConfig.editorconfig
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.AssemblyInfoInputs.cache
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.AssemblyInfo.cs
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.csproj.CoreCompileInputs.cache
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.sourcelink.json
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.dll
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\refint\Casino.dll
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.pdb
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\Casino.genruntimeconfig.cache
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\net8.0\ref\Casino.dll
