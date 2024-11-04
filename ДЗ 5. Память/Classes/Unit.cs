@@ -49,7 +49,16 @@ namespace Classes
 
         public bool SetDamage(float value)
         {
-            _health -= value * Armor;
+            if (_weapon == null)
+            {
+                Console.WriteLine("Оружие не экипировано, урон не нанесен.");
+                return false;
+            }
+
+            float damage = _weapon.DamageRange.Get(); // Получаем случайный урон в диапазоне оружия
+            _health -= damage * (1f - Armor); // Уменьшаем здоровье с учетом брони
+            Console.WriteLine($"{Name} получил {damage * (1f - Armor):F2} урона. Оставшееся здоровье: {_health:F2}");
+
             return _health <= 0f;
         }
 
