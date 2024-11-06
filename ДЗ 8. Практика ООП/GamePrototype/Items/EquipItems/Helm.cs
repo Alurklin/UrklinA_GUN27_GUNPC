@@ -8,6 +8,6 @@ namespace GamePrototype.Items.EquipItems
 
         public uint Defence { get; }
 
-        public override EquipSlot Slot => EquipSlot.helm;
+        public override EquipSlot Slot => EquipSlot.Helm;
     }
 }

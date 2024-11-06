@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "/6RKC1MsqthY9oVQlWhuF6ZlHx/wu9uOMk+KdDDxiXzbiE5TO8WvOEN39UE7Q3SbEJZJbscJSgrrgts4AsAVrQ==",
+  "dgSpecHash": "Ry3sJXqL03M=",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\source\\repos\\GamePrototype\\GamePrototype.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "F:\\GIT\\UrklinA_GUN27_GUNPC\\ДЗ 8. Практика ООП\\GamePrototype\\GamePrototype.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.35\\microsoft.windowsdesktop.app.ref.6.0.35.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.35\\microsoft.netcore.app.ref.6.0.35.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.35\\microsoft.aspnetcore.app.ref.6.0.35.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.35\\microsoft.netcore.app.host.win-x64.6.0.35.nupkg.sha512"
+  ],
   "logs": []
 }

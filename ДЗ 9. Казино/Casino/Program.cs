@@ -1,12 +1,22 @@
-﻿using System;
+﻿using CasinoGame.Casino;
+using CasinoGame.SaveLoad;
 
 namespace Casino
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            var casino = new Casino("C:\\CasinoProfiles");
+            // Указываем путь для сохранения профиля
+            string savePath = "C:\\GameData";
+
+            // Создаем экземпляр службы сохранения/загрузки
+            ISaveLoadService<string> saveLoadService = new FileSystemSaveLoadService(savePath);
+
+            // Создаем объект казино, который реализует интерфейс IGame
+            IGame casino = new CasinoGame.Casino.Casino(saveLoadService);
+
+            // Запускаем игру, вызывая метод StartGame через интерфейс IGame
             casino.StartGame();
         }
     }

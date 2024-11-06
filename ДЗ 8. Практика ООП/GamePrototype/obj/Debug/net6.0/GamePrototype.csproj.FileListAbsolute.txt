@@ -13,3 +13,11 @@ C:\Users\User\source\repos\GamePrototype\obj\Debug\net6.0\refint\GamePrototype.d
 C:\Users\User\source\repos\GamePrototype\obj\Debug\net6.0\GamePrototype.pdb
 C:\Users\User\source\repos\GamePrototype\obj\Debug\net6.0\GamePrototype.genruntimeconfig.cache
 C:\Users\User\source\repos\GamePrototype\obj\Debug\net6.0\ref\GamePrototype.dll
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\GamePrototype.GeneratedMSBuildEditorConfig.editorconfig
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\GamePrototype.AssemblyInfoInputs.cache
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\GamePrototype.AssemblyInfo.cs
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\GamePrototype.csproj.CoreCompileInputs.cache
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\GamePrototype.sourcelink.json
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\GamePrototype.dll
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\refint\GamePrototype.dll
+F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 8. Практика ООП\GamePrototype\obj\Debug\net6.0\GamePrototype.pdb
