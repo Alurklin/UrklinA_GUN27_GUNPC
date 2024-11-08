@@ -353,6 +353,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/EditorMover.cs"
 "Assets/Scripts/PositionSaver.cs"
+"Assets/Scripts/ReadOnlyAttribute.cs"
 "Assets/Scripts/ReplayMover.cs"
 -langversion:9.0
 
