@@ -1,7 +1,0 @@
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 5. Память\Classes\obj\Debug\Classes.csproj.AssemblyReference.cache
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 5. Память\Classes\obj\Debug\Classes.csproj.CoreCompileInputs.cache
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 5. Память\Classes\bin\Debug\Classes.exe.config
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 5. Память\Classes\bin\Debug\Classes.exe
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 5. Память\Classes\bin\Debug\Classes.pdb
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 5. Память\Classes\obj\Debug\Classes.exe
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 5. Память\Classes\obj\Debug\Classes.pdb
