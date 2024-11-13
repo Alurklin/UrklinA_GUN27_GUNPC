@@ -471,6 +471,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 6366518308994280909, guid: ba028717a08a6424dab3ccf808cdbc25, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba028717a08a6424dab3ccf808cdbc25, type: 3}
 --- !u!54 &923034969 stripped
@@ -496,7 +500,7 @@ GameObject:
   - component: {fileID: 949197882}
   - component: {fileID: 949197881}
   - component: {fileID: 949197884}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gates
   m_TagString: Finish
   m_Icon: {fileID: 0}
