@@ -14,7 +14,7 @@ namespace DefaultNamespace
 		}
 
         [Tooltip("Use context menu option ‘Create File’ to populate this field.")]
-        [ReadOnly]
+        [SerializeField,ReadOnly]
         private TextAsset _json;
 
         [SerializeField, HideInInspector]

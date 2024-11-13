@@ -18,9 +18,24 @@ namespace DefaultNamespace
 
         private void Start()
 		{
+			_save = GetComponent<PositionSaver>();
+
+			if (_save == null)
+			{
+				Debug.LogError("PositionSaver not found", this);
+				enabled = false;
+				return;
+			}
+
+            if (_save.Records == null)
+            {
+                Debug.LogError("Records not found", this);
+                enabled = false;
+                return;
+            }
             //todo comment: Почему этот поиск производится здесь, а не в начале метода Update?
             //Для оптимизации. Чтоб getcomponent вызывался только 1 раз.
-            _save = GetComponent<PositionSaver>();
+            
             _save.Records.Clear();
 
             if (_duration <= _delay)
