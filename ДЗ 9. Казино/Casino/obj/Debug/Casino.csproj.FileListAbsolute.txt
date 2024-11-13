@@ -1,7 +1,0 @@
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\Casino.exe.config
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\Casino.exe
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\bin\Debug\Casino.pdb
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\Casino.csproj.AssemblyReference.cache
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\Casino.csproj.CoreCompileInputs.cache
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\Casino.exe
-F:\GIT\UrklinA_GUN27_GUNPC\ДЗ 9. Казино\Casino\obj\Debug\Casino.pdb
