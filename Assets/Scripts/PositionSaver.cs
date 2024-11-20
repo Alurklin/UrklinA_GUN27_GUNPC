@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-	[Serializable]
-	public class PositionSaver : MonoBehaviour
+    public class PositionSaver : MonoBehaviour
 	{
         [System.Serializable]
         public struct Data
@@ -19,10 +18,17 @@ namespace DefaultNamespace
         [SerializeField,ReadOnly]
         private TextAsset _json;
 
-		[SerializeField]
-        public List<Data> Records { get; private set; }
+        [SerializeField, HideInInspector]
+        private List<Data> _records = new List<Data>();
 
-		private void Awake()
+        public List<Data> Records
+        {
+            get => _records;
+            private set => _records = value;
+        }
+
+
+        private void Awake()
 		{
 			//todo comment: Что будет, если в теле этого условия не сделать выход из метода?
 			//Если не выйти из метода, то возникнет исключение NullReferenceException, так как попытка обращения к несуществующему объекту _json.
@@ -97,32 +103,16 @@ namespace DefaultNamespace
 
 		private void OnDestroy()
 		{
-			// Если _json не пуст, сериализуем Records в JSON и сохраняем в этот TextAsset
-			if (_json != null && Records != null && Records.Count > 0)
-			{
-                // Сериализуем объект, включая список Records, в строку JSON
-                string json = JsonUtility.ToJson(this, true);
+			 if (_json == null) return;
 
-                // Получаем путь к файлу, который связан с _json
-                string filePath = UnityEditor.AssetDatabase.GetAssetPath(_json);
-
-                // Записываем строку JSON в файл
-                File.WriteAllText(filePath, json);
-
-                // Обновляем AssetDatabase, чтобы изменения вступили в силу
-                UnityEditor.AssetDatabase.SaveAssets();
-				UnityEditor.AssetDatabase.Refresh();
-
-				Debug.Log($"Records have been serialized and saved{filePath}");
-			}
-			else if (_json = null)
-			{
-				Debug.LogWarning("_json is null. Unable to serialize data.");
-			}
-			else 
-			{
-                Debug.LogWarning("No records. Unable to serialize data.");
-            }
+        var text = JsonUtility.ToJson(this, true);
+        
+        var path = UnityEditor.AssetDatabase.GetAssetPath(_json);
+        path = Path.Combine(Application.dataPath.Replace("Assets", ""), path);
+        File.WriteAllText(path, text);
+        UnityEditor.EditorUtility.SetDirty(_json);
+        UnityEditor.AssetDatabase.SaveAssets();
+        UnityEditor.AssetDatabase.Refresh();
         }
 #endif
 	}
