@@ -6,7 +6,7 @@ namespace DefaultNamespace
 	[RequireComponent(typeof(PositionSaver))]
 	public class ReplayMover : MonoBehaviour
 	{
-		private PositionSaver _save;
+        private PositionSaver _save;
 
 		private int _index;
 		private PositionSaver.Data _prev;
@@ -27,7 +27,14 @@ namespace DefaultNamespace
 
 		private void Update()
 		{
-			var curr = _save.Records[_index];
+            if (_index >= _save.Records.Count)
+            {
+                enabled = false;
+                Debug.Log($"{name} finished playback", this);
+                return; // Прекращаем выполнение метода
+            }
+
+            var curr = _save.Records[_index];
 			//todo comment: Что проверяет это условие (с какой целью)? 
 			//Условие Time.time > curr.Time проверяет, прошло ли достаточное время для перехода к следующему элементу списка
 			if (Time.time > curr.Time)

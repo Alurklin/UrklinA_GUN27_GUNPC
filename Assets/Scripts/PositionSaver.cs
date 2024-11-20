@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
+	[Serializable]
 	public class PositionSaver : MonoBehaviour
 	{
-		public struct Data
+        [System.Serializable]
+        public struct Data
 		{
 			public Vector3 Position;
 			public float Time;
@@ -17,7 +19,7 @@ namespace DefaultNamespace
         [SerializeField,ReadOnly]
         private TextAsset _json;
 
-        [SerializeField, HideInInspector]
+		[SerializeField]
         public List<Data> Records { get; private set; }
 
 		private void Awake()
@@ -95,11 +97,31 @@ namespace DefaultNamespace
 
 		private void OnDestroy()
 		{
-            // Сериализуем Records обратно в JSON и сохраняем в _json
-            if (_json != null)
-            {
-                string json = JsonUtility.ToJson(this);
-                File.WriteAllText(Path.Combine(Application.dataPath, _json.name + ".json"), json);
+			// Если _json не пуст, сериализуем Records в JSON и сохраняем в этот TextAsset
+			if (_json != null && Records != null && Records.Count > 0)
+			{
+                // Сериализуем объект, включая список Records, в строку JSON
+                string json = JsonUtility.ToJson(this, true);
+
+                // Получаем путь к файлу, который связан с _json
+                string filePath = UnityEditor.AssetDatabase.GetAssetPath(_json);
+
+                // Записываем строку JSON в файл
+                File.WriteAllText(filePath, json);
+
+                // Обновляем AssetDatabase, чтобы изменения вступили в силу
+                UnityEditor.AssetDatabase.SaveAssets();
+				UnityEditor.AssetDatabase.Refresh();
+
+				Debug.Log($"Records have been serialized and saved{filePath}");
+			}
+			else if (_json = null)
+			{
+				Debug.LogWarning("_json is null. Unable to serialize data.");
+			}
+			else 
+			{
+                Debug.LogWarning("No records. Unable to serialize data.");
             }
         }
 #endif
