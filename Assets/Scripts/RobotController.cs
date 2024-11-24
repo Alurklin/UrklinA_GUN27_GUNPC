@@ -9,10 +9,22 @@ public class RobotController : MonoBehaviour
     public float rayDistance = 1f;  // Длина лучей Raycast
     public float cleaningRadius = 1f;// Радиус сбора мусора
 
+    public AudioClip movementSound;
+    public AudioClip collisionSound;
+    private AudioSource audioSource;
+
     private Vector3 randomDirection;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
+        if (movementSound != null)
+        {
+            audioSource.clip = movementSound;
+            audioSource.Play();
+        }
+
         SetRandomDirection();
     }
 
@@ -61,6 +73,7 @@ public class RobotController : MonoBehaviour
         {
             if (item.CompareTag("Trash"))
             {
+                audioSource.PlayOneShot(collisionSound);
                 Destroy(item.gameObject);  // Убираем мусор
             }
         }
