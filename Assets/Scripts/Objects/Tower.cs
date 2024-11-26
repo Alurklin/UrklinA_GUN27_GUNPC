@@ -78,7 +78,9 @@ namespace Netologia.TowerDefence
 			_level = clampLevel;
 			UpdateRangeBackground();
 		}
-		
+
+
+		/// <returns> True - Can attack | False - need reload</returns>
 		public bool DecrementAttackReload(float delta)
 		{
 			_delay -= delta;

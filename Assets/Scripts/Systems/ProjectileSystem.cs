@@ -15,8 +15,35 @@ namespace Netologia.Systems
 		
 		public void ManualUpdate()
 		{
-			//todo Netologia homework 
-		}
+			var delta = TimeManager.DeltaTime;
+			foreach (var pool in this)
+                foreach (var projectile in pool)
+                {
+					var transform = projectile.transform;
+					var position = transform.position;
+					var target = projectile.TargetPosition;
+
+					var direction = Vector3.Normalize(target - position);
+					position += direction * (projectile.MoveSpeed * delta);
+					transform.up = direction;
+					transform.position = position;
+
+					if (Vector3.SqrMagnitude(position - target) <= _hitDistance)
+					{
+						if (projectile.HasEffect)
+						{
+							var effect = _effects[projectile.HitEffect].Get;
+							effect.transform.position = position;
+							effect.Play();
+						}
+						if (projectile.HasSound)
+							AudioManager.PlayHit(projectile.HitSound);
+
+						projectile.DealDamage();
+						this[projectile.Ref].ReturnElement(projectile.ID);
+					}
+                }
+        }
 
 		public void OnDespawnUnit(int unitID)
 		{
