@@ -20,6 +20,10 @@ public class FieldOfViewEdit : Editor
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngleLeft * fov.Radius);
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngleRight * fov.Radius);
 
-        private 
+        if (fov.CanSeePlayer)
+        {
+            Handles.color += Color.green;
+            Handles.DrawLine(fov.transform.position, fov.playerRef.transform.position);
+        }
     }
 }
