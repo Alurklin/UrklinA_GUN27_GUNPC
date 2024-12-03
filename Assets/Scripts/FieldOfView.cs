@@ -8,8 +8,8 @@ public class FieldOfView : MonoBehaviour
     [SerializeField, Range(0,360)] private float _angle;
 
     [SerializeField] private Player _player;
-    [SerializeField] private LayerMask _targetMask;
-    [SerializeField] private LayerMask _obstacleMask;
+    [SerializeField] public LayerMask _targetMask;
+    [SerializeField] public LayerMask _obstacleMask;
 
     private bool _canSeePlayer;
 
@@ -20,14 +20,13 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
-        
+        StartCoroutine(FovRoutine());
     }
-
     private IEnumerator FovRoutine() 
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
 
-        while (!_player) 
+        while (true) 
         { 
             yield return wait;
             FieldOfViewCheck();
