@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class BallController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class BallController : MonoBehaviour
     public float moveRange = 5f;    // Диапазон движения (расстояние между точками)
     public float moveSpeed = 3f;    // Скорость движения
     private bool _isThrow = false; //брошен ли мяч
+    [NonSerialized]
+    public bool _secondChance = true; //проверка, нужно ли перезапустить корутину
 
     private Vector3 _bInitialPosition; // Начальная позиция шара
     private Quaternion _bInitialRotation; // Начальная ориентация шара
@@ -17,6 +20,11 @@ public class BallController : MonoBehaviour
 
     void Start()
     {
+        if (scoreManager == null)
+        {
+            scoreManager = FindObjectOfType<ScoreManager>();  // Если не присвоена ссылка, найдем ScoreManager в сцене
+        }
+
         _bInitialPosition = transform.position;
         _bInitialRotation = transform.rotation;
         // Получаем компонент Rigidbody мяча
@@ -42,7 +50,11 @@ public class BallController : MonoBehaviour
             // Определяем направление броска (например, вперед)
             Vector3 throwDirection = transform.forward;  // Мяч будет двигаться вперед относительно его локального положения
             _rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);  // Применяем силу
-            StartCoroutine(DelayedCall());
+
+            if (_secondChance)
+            {
+                scoreManager.StartScoring();
+            } 
         }
 
     }
@@ -68,11 +80,5 @@ public class BallController : MonoBehaviour
     public void BEnablePhysics()
     {
         _rb.isKinematic = false;
-    }
-
-    IEnumerator DelayedCall()
-    {
-        yield return new WaitForSeconds(5f);
-        scoreManager.ScoreCounter(scoreManager.rscore);
     }
 }

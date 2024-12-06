@@ -1,8 +1,7 @@
 using System;
-using TMPro.EditorUtilities;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -53,54 +52,65 @@ public class ScoreManager : MonoBehaviour
     // Метод для обновления UI текстового поля с очками в раунде
     private void RoundUpdateScoreDisplay()
     {
-        if (scoreText != null)
+        if (scoreText2 != null)
         {
             scoreText2.text = "Round Score: " + rscore.ToString();
         }
     }
 
-    public void ScoreCounter(int _rscore) 
+    public void StartScoring()
     {
-        if (_rscore == 10) 
+        StartCoroutine(ScoreCalculation());
+    }
+
+    private IEnumerator ScoreCalculation()
+    {
+        yield return new WaitForSeconds(5f); // Задержка 5 секунд
+
+        if (rscore == 10)
         {
-            Reset();
             Debug.Log("Strike!");
             strike += 2;
         }
-        else if (_rscore < 10)
+        else if (rscore < 10)
         {
+            Debug.Log("Second Chance!");
+            ballController._secondChance = false;
             ballController.ResetBall();
 
-            if (_rscore < 10)
+            yield return new WaitForSeconds(5f); // Задержка для второй попытки
+
+            if (rscore == 10)
             {
-                Reset();
-                Debug.Log("No!");
-            }
-            else if (_rscore == 10)
-            {
-                Reset();
                 Debug.Log("Spare!");
                 strike += 1;
             }
+            else
+            {
+                Debug.Log("Miss!");
+            }
         }
 
+        // Учет Strike или Spare
         if (strike > 0)
         {
-            _rscore = _rscore * 2;
+            rscore *= 2;
         }
 
-        score = score + _rscore;
-        _rscore = 0;
-        strike--;
+        score += rscore;
+        rscore = 0;  // Сброс очков раунда
+        strike = Mathf.Max(0, strike - 1); // Уменьшаем strike, но не ниже 0
 
         UpdateScoreDisplay();
-        RoundUpdateScoreDisplay ();
+        RoundUpdateScoreDisplay();
+        Reset(); // Сбрасываем шар и кегли
     }
 
     public void Reset()
     {
         ballController.ResetBall();
-        pin.ResetPin();
+        pin.ResetAllPins();
+        ballController._secondChance = true;
     }
 
 }

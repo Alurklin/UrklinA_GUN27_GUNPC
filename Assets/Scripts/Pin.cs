@@ -45,6 +45,20 @@ public class Pin : MonoBehaviour
         scoreManager.AddScore(1);  // Засчитываем 1 очко
     }
 
+    public void ResetAllPins()
+    {
+        // Находим все объекты типа Pin в сцене
+        Pin[] pins = FindObjectsOfType<Pin>();
+
+        // Применяем к каждому объекту функцию ResetPin
+        foreach (Pin pin in pins)
+        {
+            pin.ResetPin();
+        }
+
+        Debug.Log("Новый раунд!");
+    }
+
     public void ResetPin()
     {
         // Останавливаем движение кегли
@@ -60,6 +74,7 @@ public class Pin : MonoBehaviour
 
         // Включаем физику обратно через кадр
         Invoke(nameof(EnablePhysics), 0.1f);
+        isKnockedDown = false;
     }
 
     public void EnablePhysics()
