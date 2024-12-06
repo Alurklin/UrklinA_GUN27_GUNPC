@@ -5,55 +5,57 @@ using UnityEngine.AI;
 
 public class SearchState : MonoBehaviour
 {
+    public Transform[] targets;  // Точки назначения
     private NavMeshAgent agent;
-    private Animator animator;
-    private CollectState _collect;
-
-    public Transform[] targets; // Список целей, заданных через Inspector
-
-    private int currentTargetIndex = 0; // Индекс текущей цели
+    private int currentTargetIndex = 0;
+    private bool isMoving = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
 
-        if (targets.Length > 0)
+        // Проверка наличия целей в массиве
+        if (targets == null || targets.Length == 0)
         {
-            // Устанавливаем первую цель
-            MoveToNextTarget();
+            Debug.LogError("Нет целей для перемещения!");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("Массив целей пуст! Добавьте объекты в массив targets.");
-        }
+
+        // Начинаем движение к первой цели
+        MoveToNextTarget();
+
     }
 
     void Update()
     {
         // Проверяем, достиг ли агент текущей цели
-        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && agent.hasPath && !isMoving)
         {
-            // Переход к следующей цели
             MoveToNextTarget();
         }
     }
 
-    void MoveToNextTarget()
+
+    private void MoveToNextTarget()
     {
-        if (targets.Length == 0) 
-        {
-            _collect.enabled = true;
-            return;
-        }
-        
+        if (targets.Length == 0) return;
 
-        // Устанавливаем цель и запускаем анимацию
-        agent.SetDestination(targets[currentTargetIndex].position);
-        animator.SetBool("FoundItem", true);
-
-        // Переход к следующей цели
-        currentTargetIndex = (currentTargetIndex + 1) % targets.Length;
+        isMoving = true; // Блокируем повторный вызов, пока идет задержка
+        StartCoroutine(MoveAfterDelay(5f));
     }
+
+    private IEnumerator MoveAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        agent.SetDestination(targets[currentTargetIndex].position);
+
+        Debug.Log($"Движение к цели: {targets[currentTargetIndex].name}");
+
+        currentTargetIndex = (currentTargetIndex + 1) % targets.Length;
+
+        isMoving = false;
+    }
+
 }
 
