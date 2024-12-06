@@ -1,17 +1,26 @@
 using UnityEngine;
+using System.Collections;
 
 public class BallController : MonoBehaviour
 {
     public float throwForce = 10f;  // Сила броска
-    private Rigidbody rb;// Ссылка на компонент Rigidbody мяча
+    private Rigidbody _rb;// Ссылка на компонент Rigidbody мяча
     public float moveRange = 5f;    // Диапазон движения (расстояние между точками)
     public float moveSpeed = 3f;    // Скорость движения
     private bool _isThrow = false; //брошен ли мяч
 
+    private Vector3 _bInitialPosition; // Начальная позиция шара
+    private Quaternion _bInitialRotation; // Начальная ориентация шара
+    private Rigidbody _ballRigidbody; // Rigidbody шара
+
+    public ScoreManager scoreManager;
+
     void Start()
     {
+        _bInitialPosition = transform.position;
+        _bInitialRotation = transform.rotation;
         // Получаем компонент Rigidbody мяча
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -32,8 +41,38 @@ public class BallController : MonoBehaviour
             _isThrow = true;
             // Определяем направление броска (например, вперед)
             Vector3 throwDirection = transform.forward;  // Мяч будет двигаться вперед относительно его локального положения
-            rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);  // Применяем силу
+            _rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);  // Применяем силу
+            StartCoroutine(DelayedCall());
         }
 
+    }
+
+    public void ResetBall()
+    {
+        // Останавливаем движение кегли
+        _rb.velocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+
+        // Возвращаем её в начальную позицию и ориентацию
+        transform.position = _bInitialPosition;
+        transform.rotation = _bInitialRotation;
+
+        // Отключаем физику на момент возврата, чтобы избежать коллизий
+        _rb.isKinematic = true;
+
+        // Включаем физику обратно через кадр
+        Invoke(nameof(BEnablePhysics), 0.1f);
+        _isThrow = false;
+    }
+
+    public void BEnablePhysics()
+    {
+        _rb.isKinematic = false;
+    }
+
+    IEnumerator DelayedCall()
+    {
+        yield return new WaitForSeconds(5f);
+        scoreManager.ScoreCounter(scoreManager.rscore);
     }
 }
