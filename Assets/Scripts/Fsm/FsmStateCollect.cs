@@ -9,7 +9,7 @@ public class FsmStateCollect : FsmState
 
     private GameObject _currentTarget;
     private float _timer;
-    private const float CollectDuration = 2f;
+    private const float CollectDuration = 1f;
 
     public FsmStateCollect(Fsm fsm, Animator animator) : base(fsm) 
     {
@@ -26,6 +26,8 @@ public class FsmStateCollect : FsmState
 
     public override void Update()
     {
+        if (_currentTarget == null) return;
+
         _timer += Time.deltaTime;
 
         if (_timer >= CollectDuration)
@@ -34,6 +36,7 @@ public class FsmStateCollect : FsmState
             {
                 Debug.Log("Collecting and Removing Object");
                 GameObject.Destroy(_currentTarget);
+                _currentTarget = null;  // Очищаем ссылку на цель
             }
             Fsm.SetState<FsmStateIdle>();
         }

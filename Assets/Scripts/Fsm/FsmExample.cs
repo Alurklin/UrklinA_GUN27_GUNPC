@@ -8,11 +8,12 @@ namespace FSM.Scripts
         private Animator _animator;
         private Fsm _fsm;
 
+        public delegate void CollisionDetectedHandler(GameObject target);
+        public event CollisionDetectedHandler OnCollisionDetected;  // Событие для коллизии
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
-
-            _fsm = new Fsm(_animator);
 
             _fsm = new Fsm(_animator);  // Передаем Animator в Fsm
             _fsm.AddState(new FsmStateIdle(_fsm, _animator));
@@ -25,6 +26,20 @@ namespace FSM.Scripts
         private void Update()
         {
             _fsm.Update();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            // Проверка, что мы столкнулись с целью
+            if (other.CompareTag("Target"))
+            {
+                Debug.Log("Target reached: Switching to Collect State");
+
+                // Вызываем событие при столкновении с целью
+                OnCollisionDetected?.Invoke(other.gameObject);
+
+                _fsm.SetState<FsmStateCollect>(); // Переключаемся на состояние сбора
+            }
         }
 
     }

@@ -26,6 +26,10 @@ public class FsmStateSearch : FsmState
         _currentTargetIndex = 0;
         Debug.Log("Entering Search State: Playing Walk Animation");
         _animator.SetTrigger("Search");
+
+        // Подписываемся на событие коллизии
+        var fsmExample = GameObject.FindGameObjectWithTag("Agent").GetComponent<FsmExample>();
+        fsmExample.OnCollisionDetected += HandleCollision;  // Подписка на событие
     }
 
     public override void Update()
@@ -36,6 +40,38 @@ public class FsmStateSearch : FsmState
 
         // Перемещаем агента к цели
         _agent.position = Vector3.MoveTowards(_agent.position, target.position, _speed * Time.deltaTime);
+
+        if (Vector3.Distance(_agent.position, target.position) < 0.1f)
+        {
+            Debug.Log($"Target {_currentTargetIndex} reached.");
+
+            // Переход к следующей цели
+            _currentTargetIndex++;
+
+            // Если это была последняя цель, возвращаемся к первой или завершение
+            if (_currentTargetIndex >= _targets.Length)
+            {
+                Debug.Log("All targets reached.");
+                _currentTargetIndex = 0;  // Если хотите, чтобы персонаж начинал снова с первой цели
+                // Можно переключиться на другое состояние, если нужно:
+                Fsm.SetState<FsmStateIdle>();
+            }
+        }
+
+    }
+
+    public override void Exit()
+    {
+        // Отписываемся от события, когда выходим из состояния
+        var fsmExample = GameObject.FindGameObjectWithTag("Agent").GetComponent<FsmExample>();
+        fsmExample.OnCollisionDetected -= HandleCollision;
+    }
+
+    private void HandleCollision(GameObject target)
+    {
+        Debug.Log("Handling collision with target: " + target.name);
+
+        GameObject.Destroy(target);  // Уничтожаем объект
 
     }
 
