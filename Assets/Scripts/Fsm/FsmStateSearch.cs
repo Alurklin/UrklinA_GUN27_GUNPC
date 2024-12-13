@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using FSM.Scripts;
 using System.Linq;
+using UnityEngine.AI;
 
 public class FsmStateSearch : FsmState
 {
@@ -10,22 +9,30 @@ public class FsmStateSearch : FsmState
 
     private int _currentTargetIndex;
     private Transform[] _targets;
-    private Transform _agent;
-    private float _speed = 1f;
+    private NavMeshAgent _agent;
 
     public FsmStateSearch(Fsm fsm, Animator animator) : base(fsm)
     {
         _animator = animator;  // Сохраняем Animator
-        // Initialize targets and agent in your game context
-        _targets = GameObject.FindGameObjectsWithTag("Target").Select(obj => obj.transform).ToArray();
-        _agent = GameObject.FindGameObjectWithTag("Agent").transform;
+        _agent = GameObject.FindGameObjectWithTag("Agent").GetComponent<NavMeshAgent>();  // Получаем компонент NavMeshAgent
     }
 
     public override void Enter()
     {
+        // Initialize targets and agent in your game context
+        _targets = GameObject.FindGameObjectsWithTag("Target").Select(obj => obj.transform).ToArray();
         _currentTargetIndex = 0;
-        Debug.Log("Entering Search State: Playing Walk Animation");
-        _animator.SetTrigger("Search");
+
+        if (_targets.Length != 0)
+        {
+            Debug.Log("Entering Search State: Playing Walk Animation");
+            _animator.SetTrigger("Search");
+        }
+        else 
+        {
+            Debug.Log("No Targets");
+        }
+            
 
         // Подписываемся на событие коллизии
         var fsmExample = GameObject.FindGameObjectWithTag("Agent").GetComponent<FsmExample>();
@@ -38,30 +45,27 @@ public class FsmStateSearch : FsmState
 
         var target = _targets[_currentTargetIndex];
 
-        // Перемещаем агента к цели
-        Vector3 direction = target.position - _agent.position;
-        _agent.position = Vector3.MoveTowards(_agent.position, target.position, _speed * Time.deltaTime);
-
-        // Разворачиваем персонажа в сторону движения
-        if (direction.magnitude > 0.1f)
+        // Проверяем, что агент не в пути и назначаем новую цель
+        if (!_agent.pathPending && (_agent.destination != target.position))
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            _agent.rotation = Quaternion.Slerp(_agent.rotation, targetRotation, Time.deltaTime * 5f);  // Скорость поворота
+            _agent.SetDestination(target.position);  // Устанавливаем цель для агента
         }
 
-        if (Vector3.Distance(_agent.position, target.position) < 0.1f)
+        // Проверяем, достиг ли агент цели
+        if (Vector3.Distance(_agent.transform.position, target.position) < 0.1f)
         {
             Debug.Log($"Target {_currentTargetIndex} reached.");
 
             // Переход к следующей цели
             _currentTargetIndex++;
 
-            // Если это была последняя цель, возвращаемся к первой или завершение
+            // Если это была последняя цель, возвращаемся к первой или завершаем
             if (_currentTargetIndex >= _targets.Length)
             {
                 Debug.Log("All targets reached.");
-                _currentTargetIndex = 0;  // Если хотите, чтобы персонаж начинал снова с первой цели
-                // Можно переключиться на другое состояние, если нужно:
+                _currentTargetIndex = 0;  // Начинаем снова с первой цели
+
+                // Если необходимо, переключаем состояние, например:
                 Fsm.SetState<FsmStateIdle>();
             }
         }
@@ -78,8 +82,6 @@ public class FsmStateSearch : FsmState
     private void HandleCollision(GameObject target)
     {
         Debug.Log("Handling collision with target: " + target.name);
-
-        GameObject.Destroy(target);  // Уничтожаем объект
 
     }
 

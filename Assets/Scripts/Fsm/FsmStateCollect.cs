@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using FSM.Scripts;
 
@@ -26,7 +24,12 @@ public class FsmStateCollect : FsmState
 
     public override void Update()
     {
-        if (_currentTarget == null) return;
+        if (_currentTarget == null) 
+        {
+            //Debug.Log("_currentTarget = 0");
+            return;
+        }
+        
 
         _timer += Time.deltaTime;
 

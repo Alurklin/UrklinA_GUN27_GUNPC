@@ -45,6 +45,21 @@ public class Fsm
         }
     }
 
+    // Метод для получения состояния по типу
+    public T GetState<T>() where T : FsmState
+    {
+        // Проверяем, существует ли состояние в словаре по типу T
+        if (_states.TryGetValue(typeof(T), out var state))
+        {
+            return (T)state; // Преобразуем к типу T и возвращаем
+        }
+        else
+        {
+            // Если состояние не найдено, выбрасываем исключение
+            throw new InvalidOperationException($"State of type {typeof(T)} not found in FSM.");
+        }
+    }
+
     public void Update()
     {
         StateCurrent?.Update();

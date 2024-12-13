@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace FSM.Scripts
@@ -37,6 +36,10 @@ namespace FSM.Scripts
 
                 // Вызываем событие при столкновении с целью
                 OnCollisionDetected?.Invoke(other.gameObject);
+
+                // Передаем цель в состояние сбора
+                var collectState = _fsm.GetState<FsmStateCollect>();
+                collectState.SetTarget(other.gameObject);
 
                 _fsm.SetState<FsmStateCollect>(); // Переключаемся на состояние сбора
             }
