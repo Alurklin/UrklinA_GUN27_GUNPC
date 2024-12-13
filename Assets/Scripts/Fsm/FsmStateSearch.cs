@@ -39,7 +39,15 @@ public class FsmStateSearch : FsmState
         var target = _targets[_currentTargetIndex];
 
         // Перемещаем агента к цели
+        Vector3 direction = target.position - _agent.position;
         _agent.position = Vector3.MoveTowards(_agent.position, target.position, _speed * Time.deltaTime);
+
+        // Разворачиваем персонажа в сторону движения
+        if (direction.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            _agent.rotation = Quaternion.Slerp(_agent.rotation, targetRotation, Time.deltaTime * 5f);  // Скорость поворота
+        }
 
         if (Vector3.Distance(_agent.position, target.position) < 0.1f)
         {
