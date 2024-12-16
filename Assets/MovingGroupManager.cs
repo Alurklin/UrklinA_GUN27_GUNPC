@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using SampleProject;
 //all
 namespace SampleProject
 {
@@ -29,7 +28,7 @@ namespace SampleProject
             this.cache.Clear();
             this.cache.AddRange(this.groupAgents);
 
-            for (i = 0, count = this.cache.Count; i < count; i++)
+            for (int i = 0, count = this.cache.Count; i < count; i++)
             {
                 var group = this.cache[i];
                 group.Update();

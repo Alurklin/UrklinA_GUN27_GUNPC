@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-
+//all
 namespace SampleProject
 {
     public sealed class ObjectsMover : MonoBehaviour
@@ -39,7 +36,25 @@ namespace SampleProject
 
         private void MoveToPosition(Vector3 targetPosition)
         {
+            targetPosition.y = 0;
 
+            this.movingGroupManager.AddGroup(this.agents, targetPosition);
+
+            foreach (var agent in this.agents)
+            {
+                agent.MoveToPosition(targetPosition);
+            }
+        }
+
+        private Vector3 CalculateCenter(Vector3[] points)
+        {
+            var result = Vector3.zero;
+            foreach(var point in points)
+            {
+                result += point;
+            }
+
+            return result / points.Length;
         }
     }
 }

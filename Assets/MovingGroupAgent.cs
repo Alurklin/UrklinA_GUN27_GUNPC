@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-//30:19
+//all
 namespace SampleProject
 {
     public sealed class MovingGroupAgent : MonoBehaviour
@@ -43,7 +43,7 @@ namespace SampleProject
             this.CompleteAgents();
         }
 
-        public void RemoveAgents(IEnmerable<MoveAgent> agents)
+        public void RemoveAgents(IEnumerable<MoveAgent> agents)
         {
             foreach (var agent in agents)
             {
@@ -106,7 +106,7 @@ namespace SampleProject
             for (var i = 0; i < count; i++)
             {
                 var agent = agents[i];
-                CorrectAgentPaths(agent, agents);
+                CorrectAgentPath(agent, agents);
             }
         }
 
@@ -130,5 +130,118 @@ namespace SampleProject
                 agent.CorrectPath();
             }
         }
+
+        private static bool CheckCollisionForCorrect(MoveAgent agent, List<MoveAgent> otherAgents)
+        {
+            var position = agent.transform.position;
+            if (!agent.TryGetNextPosition(out var targetPosition))
+            {
+                return false;
+            }
+
+            if (Vector3.Distance(position, targetPosition) > STOPPING_DISTANCE)
+            {
+                return false;
+            }
+
+            for (int i = 0, count = otherAgents.Count; i < count; i++)
+            {
+                var otherAgent = otherAgents[i];
+                if (otherAgent == agent)
+                {
+                    continue;
+                }
+
+                if (!otherAgent.TryGetNextPosition(out var otherTargetPosition))
+                {
+                    continue;
+                }
+
+                if (Vector3.Distance(targetPosition, otherTargetPosition) > EQUALS_POINT_DISTANCE)
+                {
+                    continue;
+                }
+
+                if (Vector3.Distance(otherAgent.transform.position, targetPosition) < STOPPING_DISTANCE)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool HasCorrectedAgentNear(MoveAgent agent, List<MoveAgent> otherAgents)
+        {
+            var position = agent.transform.position;
+
+            for (int i = 0, count = otherAgents.Count; i < count; i++)
+            {
+                var otherAgent = otherAgents[i];
+                if(otherAgent == agent)
+                {
+                    continue;
+                }
+
+                if (otherAgent.CanCorrectPath)
+                {
+                    continue;
+                }
+
+                var otherPosition = otherAgent.transform.position;
+                if(Vector3.Distance(position, otherPosition) <= STOPPING_DISTANCE)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region AvoidObstacles
+
+        private static void AvoidObstacles(List<MoveAgent> agents)
+        {
+            for(int i = 0, count = agents.Count; i < count; i++)
+            {
+                var agent = agents[i];
+                AvoidObstacles(agent, agents);
+            }
+        }
+
+        private static void AvoidObstacles(MoveAgent agent, List<MoveAgent> agents)
+        {
+            if (agent.IsObstacleAvoid)
+            {
+                return;
+            }
+
+            var agentPosition = agent.transform.position;
+
+            for (int i = 0, count = agents.Count; i < count; i++)
+            {
+                var otherAgent = agents[i];
+                if (otherAgent == agent)
+                {
+                    continue;
+                }
+
+                if (!otherAgent.IsObstacleAvoid)
+                {
+                    continue;
+                }
+
+                var otherPosition = agent.transform.position;
+                if (Vector3.Distance(agentPosition, otherPosition) <= OBSTACLE_AVOID_DISTANCE)
+                {
+                    otherAgent.StartAvoidObstacle();
+                    break;
+                }
+            }
+        }
+
+        #endregion
     }
 }
