@@ -29,8 +29,9 @@ namespace FSM.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
+            var marker = other.GetComponent<CoinMarker>();
             // Проверка, что мы столкнулись с целью
-            if (other.CompareTag("Target"))
+            if (marker != null)
             {
                 Debug.Log("Target reached: Switching to Collect State");
 

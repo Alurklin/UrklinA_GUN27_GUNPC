@@ -3,7 +3,7 @@ using FSM.Scripts;
 
 public class FsmStateIdle : FsmState
 {
-    private Animator _animator;
+    private readonly Animator _animator;
 
     private float _timer;
     private const float IdleDuration = 5f;
