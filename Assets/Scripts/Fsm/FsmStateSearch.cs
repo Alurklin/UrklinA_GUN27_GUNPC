@@ -13,6 +13,8 @@ public class FsmStateSearch : FsmState
     private NavMeshAgent _agent;
     private Transform _characterTransform;  // Хранение ссылки на трансформ персонажа
     private SkinnedMeshRenderer _characterRenderer;  // Ссылка на Renderer для изменения цвета
+    private GameObject _smokePrefab;  // Префаб дыма
+    private GameObject _smokeInstance;  // Экземпляр дыма
 
     public FsmStateSearch(Fsm fsm, Animator animator) : base(fsm)
     {
@@ -52,6 +54,21 @@ public class FsmStateSearch : FsmState
         {
             _characterRenderer.material.DOColor(Color.red, 1f);  // Меняем цвет на красный за 1 секунду
         }
+
+        // Загрузка префаба дыма из ресурсов
+        _smokePrefab = Resources.Load<GameObject>("SmokePrefab");  // Замените на путь к вашему префабу в папке Resources
+
+        // Создание экземпляра дыма
+        if (_smokePrefab != null)
+        {
+            _smokeInstance = Object.Instantiate(_smokePrefab, _characterTransform.position, Quaternion.identity);
+            _smokeInstance.transform.SetParent(_characterTransform);  // Сделаем дым дочерним объектом персонажа
+            _smokeInstance.transform.localPosition = new Vector3(0, 0, -1);  // Cдвиг дыма
+        }
+        else
+        {
+            Debug.LogError("Smoke prefab not found in Resources folder!");
+        }
     }
 
     public override void Update()
@@ -83,6 +100,12 @@ public class FsmStateSearch : FsmState
                 // Если необходимо, переключаем состояние, например:
                 Fsm.SetState<FsmStateIdle>();
             }
+
+            // Если дым существует, обновляем его позицию, чтобы он следовал за персонажем
+            if (_smokeInstance != null)
+            {
+                _smokeInstance.transform.position = _characterTransform.position + new Vector3(0, 0, -1);
+            }
         }
 
     }
@@ -101,6 +124,19 @@ public class FsmStateSearch : FsmState
         if (_characterRenderer != null)
         {
             _characterRenderer.material.DOColor(Color.white, 1f);  // Меняем цвет на красный за 1 секунду
+        }
+
+        // Остановим систему частиц (дым)
+        if (_smokeInstance != null)
+        {
+            var smokeParticleSystem = _smokeInstance.GetComponent<ParticleSystem>();
+            if (smokeParticleSystem != null)
+            {
+                smokeParticleSystem.Stop();  // Остановим дым
+            }
+
+            // Удаляем экземпляр дыма
+            Object.Destroy(_smokeInstance);
         }
     }
 
